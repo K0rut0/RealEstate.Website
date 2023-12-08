@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Koruto's Real Estate</h1>
+    <p>Browse and list real estate property here </p>
+    <div id="signInButtons">
+        
+        <input type="button" value="Login" onclick="location.href='@Url.Action("Login", "Home")'" />
+        <input type="button" value="Sign-Up" onclick="location.href='@Url.Action("SignUp", "Home")'" />
+    </div>
+</div>
+

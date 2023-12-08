@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Login Page";
+    var displayForm = HttpContextAccessor.HttpContext.Session.GetString("SessionID") != null ? "none" : "block";
+    var displayRedirect = HttpContextAccessor.HttpContext.Session.GetString("SessionID") != null ? "block" : "none";
+}
+
+
+<div style="display: @displayForm">
+    @using (Html.BeginForm("Login", "User"))
+    {
+        <label>Username: @Html.TextBox("username") </label>
+        <label>Password: @Html.Password("password") </label>
+        <input type="submit" value="Login" />
+    }
+</div>
+<div style="display: @displayRedirect">
+    <p>
+        Already Logged in to: @HttpContextAccessor.HttpContext.Session.GetString("SessionID")
+    </p>
+    <input type="button" value="Home" onclick="location.href='@Url.Action("Home", "Home")'" />
+</div>

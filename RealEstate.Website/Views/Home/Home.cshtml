@@ -1,0 +1,63 @@
+﻿@model List<PropsViewModel>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var categories = (List<PropsViewModel>)ViewData["MyData"];
+    ViewData["Title"] = "Home Page";
+    var UserType = HttpContextAccessor.HttpContext.Session.GetString("UserType");
+    bool canSell = false;
+    bool canBuy = false;
+    if (Int32.Parse(UserType) == 1 || Int32.Parse(UserType) == 3)
+    {
+        canBuy = true;
+    }
+    if (Int32.Parse(UserType) == 2 || Int32.Parse(UserType) == 3)
+    {
+        canSell = true;
+    }
+    var seller = canSell ? "block" : "none";
+    var buyer = canBuy ? "block" : "none";
+}
+<p>
+    Welcome @HttpContextAccessor.HttpContext.Session.GetString("SessionID")!
+</p>
+<div style="display: @seller">
+    @using (Html.BeginForm("SellProperty", "Property"))
+    {
+        <h4>
+            Sell Property
+        </h4>
+        <label>Property Name: @Html.TextBox("propertyName") </label>
+        <label>Property Location: @Html.TextBox("propertyLocation") </label>
+        <select name="propertyType">
+            <option value="1">Industrial</option>
+            <option value="2">Commercial</option>
+        </select>
+        <label>Property Price: @Html.TextBox("propertyPrice") </label>
+        <input type="submit" value="Sell" />
+    }
+</div>
+<div style="display: @buyer">
+    <table>
+        <th>Property Name</th>
+        <th>Location</th>
+        <th>Type</th
+        <th>Price</th>
+        <th>Anual Tax</th>
+        <th>Purachase Tax </th>
+        @foreach (var c in @categories)
+        {
+            <tr>
+                <td>@c.property_name</td>
+                <td>@c.property_location</td>
+                <td>@c.property_type</td>
+                <td>@c.property_price</td>
+                <td>@c.property_anual_tax</td>
+                <td>@c.property_purchase_tax </td>
+            </tr>
+        }
+    </table>
+</div>
