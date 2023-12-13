@@ -45,12 +45,42 @@ namespace RealEstateManager
                     mod.property_type = cont[i].property_type;
                     mod.property_purchase_tax = cont[i].property_purchase_tax;
                     mod.property_anual_tax = cont[i].property_anual_tax;
+                    mod.property_owner = cont[i].property_owner;
                     list.Add(mod);
                 }
                 return list;
             }
         }
 
+        public List<bids> getBids(string owner)
+        {
+            using(var context = new RealEstateDBContext())
+            {
+                List<bids> currBids = context.bids.Where(e => e.property_owner == owner).ToList();
+                return currBids;
+            }
+        }
+        
+        public bool bid(string bidAmount, string property, string propertyOwner, string bidder)
+        {
+            using (var context = new RealEstateDBContext())
+            {
+                bids bids = new bids();
+                bids.bid_amount = bidAmount.ToString();
+                bids.bidder = bidder.ToString();
+                bids.property_name=property;
+                bids.property_owner=propertyOwner;
+                try
+                {
+                    context.bids.Add(bids);
+                    context.SaveChanges();
+                } catch(Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+                return true;
+        }
         public double CompPropArea (int s)
         {
             return s * s;

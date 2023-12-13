@@ -8,5 +8,6 @@
         public string property_price { get; set; }
         public string property_anual_tax { get; set; }
         public string property_purchase_tax { get; set; }
+        public string property_owner { get; set; }
     }
 }

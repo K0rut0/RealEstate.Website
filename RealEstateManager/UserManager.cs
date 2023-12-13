@@ -82,15 +82,18 @@ namespace RealEstateManager
                         var seller = new seller_table();
                         seller.property_count = 0;
                         seller.user_name = user.user_name;
+                        seller.agency_name = "none";
                         context.seller_table.Add(seller);
                     } else
                     {
                         var buyer = new buyer_table();
                         buyer.bids = 0.ToString();
                         buyer.balance = 0.ToString();
+                       
                         buyer.user_name = user.user_name;
                         context.buyer_table.Add(buyer);
                         var seller = new seller_table();
+                        seller.agency_name = "none";
                         seller.property_count = 0;
                         seller.user_name = user.user_name;
                         context.seller_table.Add(seller);

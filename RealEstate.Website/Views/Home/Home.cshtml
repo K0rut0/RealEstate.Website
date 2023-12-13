@@ -1,4 +1,5 @@
 ﻿@model List<PropsViewModel>
+
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
 @*
@@ -6,6 +7,7 @@
 *@
 @{
     var categories = (List<PropsViewModel>)ViewData["MyData"];
+    var bids = (List<Vbids>)ViewData["vbids"];
     ViewData["Title"] = "Home Page";
     var UserType = HttpContextAccessor.HttpContext.Session.GetString("UserType");
     bool canSell = false;
@@ -40,14 +42,37 @@
         <input type="submit" value="Sell" />
     }
 </div>
+<div style="display: @seller">
+    <table>
+        <th>
+            bidder
+        </th>
+        <th>
+            bid amount
+        </th>
+        <th>
+            property name
+        </th>
+        @foreach (var c in @bids)
+        {
+            <tr>
+                <td>@c.bidder</td>
+                <td>@c.bid_amount</td>
+                <td>@c.property_name</td>
+            </tr>
+        }
+    </table>
+</div>
 <div style="display: @buyer">
+
     <table>
         <th>Property Name</th>
         <th>Location</th>
-        <th>Type</th
+        <th>Type</th>
         <th>Price</th>
         <th>Anual Tax</th>
         <th>Purachase Tax </th>
+        <th>Property Owner</th>
         @foreach (var c in @categories)
         {
             <tr>
@@ -57,6 +82,17 @@
                 <td>@c.property_price</td>
                 <td>@c.property_anual_tax</td>
                 <td>@c.property_purchase_tax </td>
+                <td>@c.property_owner</td>
+                <td>
+                    @using(Html.BeginForm("Bid", "Property"))
+                    {
+                        <input type="number" name="bidAmount" />
+                        <input type="hidden" name="propertyName" value="@c.property_name" />
+                        <input type="hidden" name="propertyOwner" value="@c.property_owner" />
+                        <input type="hidden" name="bidder" value="@HttpContextAccessor.HttpContext.Session.GetString("SessionID")" />
+                        <input type="submit" value="Bid" />
+                    }
+                </td>
             </tr>
         }
     </table>

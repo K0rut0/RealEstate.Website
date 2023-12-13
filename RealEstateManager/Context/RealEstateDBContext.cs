@@ -15,6 +15,7 @@ namespace RealEstateManager.Context
         public DbSet<buyer_table> buyer_table { get; set; }
         public DbSet<seller_table> seller_table { get; set; }
         public DbSet<properties_table> properties_table { get; set; }
+        public DbSet<bids> bids { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
            => optionsBuilder.UseNpgsql("User Id = postgres; Password=eSy0RR0ClV0i5MoX;Server=db.zmebaqpxjlkacjajfoxn.supabase.co;Port=5432;Database=postgres");
     }
